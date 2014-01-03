@@ -1,31 +1,35 @@
-<h1>Listing posts</h1>
+<div class="large-12 columns blog">
 
-<table>
-  <thead>
-    <tr>
-      <th>Title</th>
-      <th>Content</th>
-      <th>User</th>
-      <th></th>
-      <th></th>
-      <th></th>
-    </tr>
-  </thead>
+  <%= link_to 'New Post', new_post_path, { :class => 'button'} %>
 
-  <tbody>
+  <ul class="large-block-grid-4 ">
+
     <% @posts.each do |post| %>
-      <tr>
-        <td><%= post.title %></td>
-        <td><%= post.content %></td>
-        <td><%= post.user %></td>
-        <td><%= link_to 'Show', post %></td>
-        <td><%= link_to 'Edit', edit_post_path(post) %></td>
-        <td><%= link_to 'Destroy', post, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      </tr>
+      <li>
+        <article>
+            <p>
+              <h3><%= post.title %></h3>
+              <p>Written by <i><%= post.user.username %></i>, the <%= post.created_at.strftime('%d/%m/%Y') %></p>
+            </p>
+            
+            <p class="panel">
+              <i><%= post.content %></i>
+            </p>
+            
+            <p>
+              <%= post.comments.count %> Comment(s)
+            </p>
+
+            <p>
+              <%= link_to 'Show', post %> |
+              <%= link_to 'Edit', edit_post_path(post) %> |
+              <%= link_to 'Destroy', post, method: :delete, data: { confirm: 'Are you sure?' } %>
+            </p>
+
+        </article>
+      </li>
     <% end %>
-  </tbody>
-</table>
+  
+  </ul>
 
-<br>
-
-<%= link_to 'New Post', new_post_path %>
+</div>
