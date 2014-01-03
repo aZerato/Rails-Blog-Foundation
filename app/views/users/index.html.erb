@@ -5,8 +5,8 @@
 <ul class="large-block-grid-4 ">
 
     <% @users.each do |user| %>
-       <li class="panel">
-        <article>
+       <li>
+        <article class="panel">
             <a href="users/<%= user.id %>" class="th avatar">
               <img src="http://lorempixel.com/220/220" />
             </a>
@@ -22,8 +22,8 @@
               <%= link_to 'Destroy', user, method: :delete, data: { confirm: 'Are you sure?' } %>
             </p>
 
-            <p>
-              <%= link_to 'His posts', { :controller => 'posts', :action => 'userposts', :id => user.id } %>
+            <p class="center">
+              <%= link_to 'Its posts', { :controller => 'posts', :action => 'userposts', :id => user.id }, :class => 'button' %>
             </p>
 
         </article>
