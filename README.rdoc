@@ -1,10 +1,10 @@
-= Projet de blog basic sous rails avec Foundation
+= Projet de blog (basique) sous rails avec Foundation
 
 Documentation : https://github.com/aZerato/Rails-Blog-Foundation/blob/master/doc-ruby.txt
 
 == Principes du projet
 
-=== Creation du projet
+=== Creation d'un projet sous rails
 === Préparation
 
 - Création d'un controller basique
@@ -15,3 +15,9 @@ Documentation : https://github.com/aZerato/Rails-Blog-Foundation/blob/master/doc
 === Partials
 === Scaffolding
 === Routing
+
+= En cas de clone de se projet
+
+Taper les commandes suivantes :
+- rake db:migrate
+- rails s
