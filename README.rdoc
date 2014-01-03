@@ -3,7 +3,7 @@
 
 == Creation du projet
 
-
+- Taper les commandes suivantes
 :: rails new railsFoundation
 :: cd railsFoundation
 :: rails s
@@ -29,6 +29,7 @@
 	  
 :: root to: 'home#index'
 
+- Run du server
 :: rails s
 
 
@@ -45,13 +46,13 @@
 - il faut changer le type de fichier applications.css en applications.scss
 - rajoutez lui les lignes suivantes :
 
-:: body {
+body {
 	width: 100%;
 }
 div[role=main] {
 	width: 80%;
 	margin: 0 auto;
-} ::
+}
 
 - se rendre -> app/views/layouts/application.html.erb
 - remplacer :
@@ -64,6 +65,7 @@ div[role=main] {
 	<%= yield %>
 </div>
 
+- Run du server
 rails s
 
 
@@ -74,7 +76,7 @@ rails s
 
 
 - Dans le dossier views créer un dossier 'partials' dans lequel on va créer un fichier : _menu.html.erb
-et ajoutez y :
+- et ajoutez y :
 
 	<nav class="top-bar" data-topbar>
 	  <ul class="title-area">
@@ -88,6 +90,7 @@ et ajoutez y :
 - ensuite se rendre dans -> layouts/application.html.erb pour rajouter au dessus de la div[role=main] précédemment créée :
 	<%= render "partials/menu" %>
 
+- Run du server
 rails s
 
 
@@ -100,9 +103,9 @@ rails s
 - dans le model 'Post' c'est une collection de commentaire donc ':comments' avec un S
 
 - Génération MVC :
-rails g scaffold User username:string password:string
-rails g scaffold Post title:string content:text user:references
-rails g scaffold Comment content:text user:references post:references
+:: rails g scaffold User username:string password:string
+:: rails g scaffold Post title:string content:text user:references
+:: rails g scaffold Comment content:text user:references post:references
 
 - On peut voir que tout a été généré (voir app->models)
 
@@ -128,7 +131,6 @@ class Comment < ActiveRecord::Base
 end
 
 - Grâce à ces modifications on pourra appeler par exemple : 'post.comments' directement dans une vue !
-
 
 == Routing :
 
@@ -297,7 +299,7 @@ end
 
 == Debug :
 
-Décommenter la ligne dans le Gemfile en rapport au debugger puis faites : bundle install
+- Décommenter la ligne dans le Gemfile en rapport au debugger puis faites : bundle install
 
 == Problème Javascript: déjà chargé, ... :
 
