@@ -9,17 +9,17 @@ rails s
 
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-Préparation :
+Prï¿½paration :
 -------------
 
-- création d'un controller basique :
+- crï¿½ation d'un controller basique :
 rails g controller home index
 
-- les vues ainsi qu'une feuille de style SCSS && un fichier JS/Coffee seront créees automatiquement par controller
+- les vues ainsi qu'une feuille de style SCSS && un fichier JS/Coffee seront crï¿½ees automatiquement par controller
 
 - se rendre dans -> config/routes.rb
 	- supprimer la route : get "home/index"
-	- modifier la route par défaut :
+	- modifier la route par dï¿½faut :
 		  
 		  # root 'welcome#index'
 		  
@@ -41,7 +41,7 @@ bundle install
 
 rails g foundation:install
 
-- On peut voir alors dans app/assets/stylesheets/applications.css fait appel à foundation_and_overrides.scss
+- On peut voir alors dans app/assets/stylesheets/applications.css fait appel ï¿½ foundation_and_overrides.scss
 - il faut changer le type de fichier applications.css en applications.scss
 rajoutez lui les lignes suivantes :
 
@@ -68,14 +68,14 @@ rajoutez lui les lignes suivantes :
 rails s
 
 
-RQ : taper -> 'gem env' dans la console pour voir notamment le dossier dans lequel toutes vos gems sont installées
+RQ : taper -> 'gem env' dans la console pour voir notamment le dossier dans lequel toutes vos gems sont installï¿½es
 
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 Partials :
 ----------
 
-- Dans le dossier views créer un dossier 'partials' dans lequel on va créer un fichier : _menu.html.erb
+- Dans le dossier views crï¿½er un dossier 'partials' dans lequel on va crï¿½er un fichier : _menu.html.erb
 et ajoutez y :
 
 	<nav class="top-bar" data-topbar>
@@ -87,7 +87,7 @@ et ajoutez y :
 	  </ul>
 	 </nav>
 
-- ensuite se rendre dans -> layouts/application.html.erb pour rajouter au dessus de la div[role=main] précédemment créée :
+- ensuite se rendre dans -> layouts/application.html.erb pour rajouter au dessus de la div[role=main] prï¿½cï¿½demment crï¿½ï¿½e :
 	<%= render "partials/menu" %>
 
 rails s
@@ -97,21 +97,21 @@ rails s
 Scaffolding :
 -------------
 
-- Attention à la normalisation !! Lors du scaffold on précise : 
+- Attention ï¿½ la normalisation !! Lors du scaffold on prï¿½cise : 
 	- nom table au pluriel
-	- 'user_id' mais côté Model c'est ':user'
+	- 'user_id' mais cï¿½tï¿½ Model c'est ':user'
 	- dans le model 'Post' c'est une collection de commentaire donc ':comments' avec un S
 
-- Génération MVC :
+- Gï¿½nï¿½ration MVC :
 rails g scaffold User username:string password:string
 rails g scaffold Post title:string content:text user:references
 rails g scaffold Comment content:text user:references post:references
 
-- On peut voir que tout a été généré (voir app->models)
+- On peut voir que tout a ï¿½tï¿½ gï¿½nï¿½rï¿½ (voir app->models)
 
 - taper :
 rake db:migrate
-- Pour éxécuter la tache de migration
+- Pour ï¿½xï¿½cuter la tache de migration
 
 - On modifie les models de la sorte :
 
@@ -130,16 +130,16 @@ class Comment < ActiveRecord::Base
   belongs_to :post
 end
 
-- Grâce à ces modifications on pourra appeler par exemple : 'post.comments' directement dans une vue !
+- Grï¿½ce ï¿½ ces modifications on pourra appeler par exemple : 'post.comments' directement dans une vue !
 
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 Routing :
 ---------
 
-- A partir de là on peut créer notre utilisateur, et créer des posts avec son id
+- A partir de lï¿½ on peut crï¿½er notre utilisateur, et crï¿½er des posts avec son id
 
-- On va créer une action et une route pour afficher uniquement les postes de cet utilisateur
+- On va crï¿½er une action et une route pour afficher uniquement les postes de cet utilisateur
 - Dans 'posts_controller' :
 	
 	def userposts
@@ -151,7 +151,7 @@ Routing :
  
  	get '/userposts/:id' => 'posts#userposts'
 
-- Donc en passant par l'url : 'http://localhost:3000/userposts/1' nous allons afficher tous les postes pour user à l'id 1 et réutilisant la view 'index'
+- Donc en passant par l'url : 'http://localhost:3000/userposts/1' nous allons afficher tous les postes pour user ï¿½ l'id 1 et rï¿½utilisant la view 'index'
 
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -260,7 +260,7 @@ Gestions des commentaires :
 View Post Index :
 -----------------
 
-- Se rendre dans la view index de Post et mettre remplacer le code précédemment écrit par :
+- Se rendre dans la view index de Post et mettre remplacer le code prï¿½cï¿½demment ï¿½crit par :
 
 	<div class="large-12 columns blog">
 
@@ -305,24 +305,82 @@ View Post Index :
 
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-Debug :
--------
+View Users Index :
+------------------
 
-Décommenter la ligne dans le Gemfile en rapport au debugger puis faites : bundle install
+- Se rendre dans la view index de Users :
+
+	<div class="large-12 columns blog">
+
+	<%= link_to 'New User', new_user_path, { :class => 'button'} %>
+
+	<ul class="large-block-grid-4 ">
+
+	    <% @users.each do |user| %>
+	       <li>
+	        <article class="panel">
+	            <a href="users/<%= user.id %>" class="th avatar">
+	              <img src="http://lorempixel.com/220/220" />
+	            </a>
+
+	            <p>
+	              <h3><%= user.username %></h3>
+	              <p>Registered the <%= user.created_at.strftime('%d/%m/%Y') %></p>
+	            </p>
+
+	            <p>
+	              <%= link_to 'Show', user %> |
+	              <%= link_to 'Edit', edit_user_path(user) %> |
+	              <%= link_to 'Destroy', user, method: :delete, data: { confirm: 'Are you sure?' } %>
+	            </p>
+
+	            <p class="center">
+	              <%= link_to 'Its posts', { :controller => 'posts', :action => 'userposts', :id => user.id }, :class => 'button' %>
+	            </p>
+
+	        </article>
+	      </li>
+	    <% end %>
+
+	</ul>
+
+	</div>
+
+- Allez dans le fichier SCSS qui va (app/assets/stylesheets/users.css.scss):
+
+.panel {
+        .avatar {
+                margin: 5px auto;
+                text-align: center;
+        }
+}
+
+- Mettre dans le scss global :
+
+.center {
+        text-align: center;
+}
 
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-Problème Javascript: déjà chargé, ... :
+Debug :
+-------
+
+Dï¿½commenter la ligne dans le Gemfile en rapport au debugger puis faites : bundle install
+
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Problï¿½me Javascript: dï¿½jï¿½ chargï¿½, ... :
 --------------------------------------
 
-J'ai commenté dans application.js :
+J'ai commentï¿½ dans application.js :
 	//= #require turbolinks
 	//= #require_tree
 
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 
-Problème lors d'une migration ?
+Problï¿½me lors d'une migration ?
 -------------------------------
 
 	rake db:reset
