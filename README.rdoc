@@ -1,79 +1,77 @@
-Creation du projet :
---------------------
+= Projet de blog basic sous rails avec Foundation
 
-rails new railsFoundation
 
-cd railsFoundation
+== Creation du projet
 
-rails s
 
-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+:: rails new railsFoundation
+:: cd railsFoundation
+:: rails s
 
-Préparation :
--------------
 
-- création d'un controller basique :
-rails g controller home index
+== Préparation :
+
+
+- création d'un controller basique
+:: rails g controller home index
 
 - les vues ainsi qu'une feuille de style SCSS && un fichier JS/Coffee seront créees automatiquement par controller
 
 - se rendre dans -> config/routes.rb
-	- supprimer la route : get "home/index"
-	- modifier la route par défaut :
-		  
-		  # root 'welcome#index'
-		  
-		  par
-		  
-		  root to: 'home#index'
+	
+- supprimer la route : get "home/index"
+	
+- modifier la route par défaut :
 
-rails s
+:: # root 'welcome#index'
+	  
+- par
+	  
+:: root to: 'home#index'
 
---------------------------------------------------------------------------------------------------------------------------
---------------------------------------------------------------------------------------------------------------------------
+:: rails s
 
-Installation de la gem foundation :
------------------------------------
+
+== Installation de la gem Foundation :
+
 
 - ajouter au gemfile la ligne -> gem 'foundation-rails'
 
-bundle install
+:: bundle install
 
-rails g foundation:install
+:: rails g foundation:install
 
 - On peut voir alors dans app/assets/stylesheets/applications.css fait appel à foundation_and_overrides.scss
 - il faut changer le type de fichier applications.css en applications.scss
-rajoutez lui les lignes suivantes :
+- rajoutez lui les lignes suivantes :
 
-	body {
-		width: 100%;
-	}
-
-	div[role=main] {
-		width: 80%;
-		margin: 0 auto;
-	}
+:: body {
+	width: 100%;
+}
+div[role=main] {
+	width: 80%;
+	margin: 0 auto;
+} ::
 
 - se rendre -> app/views/layouts/application.html.erb
-    remplacer :
+- remplacer :
 	    
-	    <%= yield %>
-	    
-	    par
+<%= yield %>
 
-	    <div role="main">
-	      <%= yield %>
-	    </div>
+- par
+
+<div role="main">
+	<%= yield %>
+</div>
 
 rails s
 
 
-RQ : taper -> 'gem env' dans la console pour voir notamment le dossier dans lequel toutes vos gems sont installées
+- RQ : taper -> 'gem env' dans la console pour voir notamment le dossier dans lequel toutes vos gems sont installées
 
-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-Partials :
-----------
+== Partials :
+
 
 - Dans le dossier views créer un dossier 'partials' dans lequel on va créer un fichier : _menu.html.erb
 et ajoutez y :
@@ -92,15 +90,14 @@ et ajoutez y :
 
 rails s
 
-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-Scaffolding :
--------------
+== Scaffolding :
+
 
 - Attention à la normalisation !! Lors du scaffold on précise : 
-	- nom table au pluriel
-	- 'user_id' mais côté Model c'est ':user'
-	- dans le model 'Post' c'est une collection de commentaire donc ':comments' avec un S
+- nom table au pluriel
+- 'user_id' mais côté Model c'est ':user'
+- dans le model 'Post' c'est une collection de commentaire donc ':comments' avec un S
 
 - Génération MVC :
 rails g scaffold User username:string password:string
@@ -132,10 +129,8 @@ end
 
 - Grâce à ces modifications on pourra appeler par exemple : 'post.comments' directement dans une vue !
 
-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-Routing :
----------
+== Routing :
 
 - A partir de là on peut créer notre utilisateur, et créer des posts avec son id
 
@@ -153,10 +148,9 @@ Routing :
 
 - Donc en passant par l'url : 'http://localhost:3000/userposts/1' nous allons afficher tous les postes pour user à l'id 1 et réutilisant la view 'index'
 
-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-Helper :
----------
+== Helper :
+
 
 - Modifier la partial menu :
 
@@ -183,9 +177,8 @@ Helper :
 		</section>
 	</nav>
 
-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-Gestions des commentaires :
+== Gestions des commentaires :
 
 - Dans la vue show de 'posts' mettre ce code :
 	
@@ -255,10 +248,8 @@ Gestions des commentaires :
 		redirect_to :back
 	end
 
-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-View Post Index :
------------------
+== View Post Index :
 
 - Se rendre dans la view index de Post et mettre remplacer le code précédemment écrit par :
 
@@ -303,27 +294,19 @@ View Post Index :
 		margin-top: 30px;
 	}
 
-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-Debug :
--------
+== Debug :
 
 Décommenter la ligne dans le Gemfile en rapport au debugger puis faites : bundle install
 
-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-
-Problème Javascript: déjà chargé, ... :
---------------------------------------
+== Problème Javascript: déjà chargé, ... :
 
 J'ai commenté dans application.js :
 	//= #require turbolinks
 	//= #require_tree
 
-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-
-Problème lors d'une migration ?
--------------------------------
+== Problème lors d'une migration ?
 
 	rake db:reset
 	rake db:migrate
