@@ -1,0 +1,39 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <h1><%= @post.title %></h1>
+  <i>Writen by <%= @post.user.username %></i>
+</p>
+
+<p>
+  <h3><%= @post.content %></h3>
+</p>
+
+<div class="panel">
+	<p>
+		<h4><%= @post.comments.count %> comment(s) :</h4>
+	</p>
+
+	<p>
+		<% @post.comments.each do |comment| %>
+			<p><b><%= comment.user.username %></b></p>
+			<p><i><%= comment.content %></i></p>
+		<% end %>
+	</p>
+</div>
+
+<p>
+	<h4>New Comment :</h4>
+</p>
+
+<%= form_for [ @post, Comment.new ] do |comment| %>
+	<p>
+    	<%= comment.label :content, "New comment" %><br/>
+    	<%= comment.text_area :content %>
+  	</p>
+
+  	<%= button_tag "Comment", :type => 'submit' %>
+<% end %>
+
+<%= link_to 'Edit', edit_post_path(@post) %> |
+<%= link_to 'Back', posts_path %>
