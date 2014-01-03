@@ -23,11 +23,19 @@
 	
 - modifier la route par défaut :
 
-:: # root 'welcome#index'
+---
+
+# root 'welcome#index'
+
+---
 	  
 - par
-	  
-:: root to: 'home#index'
+
+---
+
+root to: 'home#index'
+
+---
 
 - Run du server
 :: rails s
@@ -45,7 +53,9 @@
 - On peut voir alors dans app/assets/stylesheets/applications.css fait appel à foundation_and_overrides.scss
 - il faut changer le type de fichier applications.css en applications.scss
 - rajoutez lui les lignes suivantes :
+
 ---
+
 body {
 	width: 100%;
 }
@@ -53,18 +63,28 @@ div[role=main] {
 	width: 80%;
 	margin: 0 auto;
 }
+
 ---
+
 - se rendre -> app/views/layouts/application.html.erb
 - remplacer :
+
 ---	    
+
 <%= yield %>
+
 ---
+
 - par
+
 ---
+
 <div role="main">
 	<%= yield %>
 </div>
+
 ---
+
 - Run du server
 rails s
 
@@ -77,7 +97,9 @@ rails s
 
 - Dans le dossier views créer un dossier 'partials' dans lequel on va créer un fichier : _menu.html.erb
 - et ajoutez y :
+
 ---
+
 	<nav class="top-bar" data-topbar>
 	  <ul class="title-area">
 	    <li class="name">
@@ -86,17 +108,22 @@ rails s
 	    <li class="toggle-topbar menu-icon"><a href="#"><span>Menu</span></a></li>
 	  </ul>
 	 </nav>
+
 ---
+
 - ensuite se rendre dans -> layouts/application.html.erb pour rajouter au dessus de la div[role=main] précédemment créée :
+
 ---
+
 	<%= render "partials/menu" %>
+
 ---
+
 - Run du server
-rails s
+:: rails s
 
 
 == Scaffolding :
-
 
 - Attention à la normalisation !! Lors du scaffold on précise : 
 - nom table au pluriel
@@ -111,28 +138,40 @@ rails s
 - On peut voir que tout a été généré (voir app->models)
 
 - taper :
-rake db:migrate
+:: rake db:migrate
+
 - Pour éxécuter la tache de migration
 
 - On modifie les models de la sorte :
+
 ---
+
 class User < ActiveRecord::Base
 	has_many :comments
 	has_many :posts
+
 end
+
 ---
+
 ---
+
 class Post < ActiveRecord::Base
   belongs_to :user
   has_many :comments
 end
+
 ---
+
 ---
+
 class Comment < ActiveRecord::Base
   belongs_to :user
   belongs_to :post
 end
+
 ---
+
 - Grâce à ces modifications on pourra appeler par exemple : 'post.comments' directement dans une vue !
 
 == Routing :
@@ -141,165 +180,195 @@ end
 
 - On va créer une action et une route pour afficher uniquement les postes de cet utilisateur
 - Dans 'posts_controller' :
----	
-	def userposts
-		@posts = Post.where(user_id: params[:id])
-		render 'index'
-	end
----
-- Dans 'routes' :
----
- 	get '/userposts/:id' => 'posts#userposts'
----
-- Donc en passant par l'url : 'http://localhost:3000/userposts/1' nous allons afficher tous les postes pour user à l'id 1 et réutilisant la view 'index'
 
+---	
+
+def userposts
+	@posts = Post.where(user_id: params[:id])
+	render 'index'
+end
+
+---
+
+- Dans 'routes' :
+
+---
+
+ 	get '/userposts/:id' => 'posts#userposts'
+
+---
+
+- Donc en passant par l'url : 'http://localhost:3000/userposts/1' nous allons afficher tous les postes pour user à l'id 1 et réutilisant la view 'index'
 
 == Helper :
 
 
 - Modifier la partial menu :
----
-	<nav class="top-bar" data-topbar>
-		<ul class="title-area">
-			<li class="name">
-			  <h1><%= link_to "RailsFoundationBlog", controller: "home", action: "index" %></h1>
-			</li>
-			<li class="toggle-topbar menu-icon"><a href="#"><span>Menu</span></a></li>
-		</ul>
 
-		<section class="top-bar-section">
-			<!-- Right Nav Section -->
-			<ul class="right">
-			  <li class="has-dropdown">
-			    <a href="#">Menu</a>
-			    <ul class="dropdown">
-			      <li><%= link_to "Posts", controller: "posts", action: "index" %></li>
-			      <li><%= link_to "Users", controller: "users", action: "index" %></li>
-			      <li><%= link_to "Comments", controller: "comments", action: "index" %></li>
-			    </ul>
-			  </li>
-			</ul>
-		</section>
-	</nav>
+---
+
+<nav class="top-bar" data-topbar>
+	<ul class="title-area">
+		<li class="name">
+		  <h1><%= link_to "RailsFoundationBlog", controller: "home", action: "index" %></h1>
+		</li>
+		<li class="toggle-topbar menu-icon"><a href="#"><span>Menu</span></a></li>
+	</ul>
+
+	<section class="top-bar-section">
+		<!-- Right Nav Section -->
+		<ul class="right">
+		  <li class="has-dropdown">
+		    <a href="#">Menu</a>
+		    <ul class="dropdown">
+		      <li><%= link_to "Posts", controller: "posts", action: "index" %></li>
+		      <li><%= link_to "Users", controller: "users", action: "index" %></li>
+		      <li><%= link_to "Comments", controller: "comments", action: "index" %></li>
+		    </ul>
+		  </li>
+		</ul>
+	</section>
+</nav>
+
 ---
 
 == Gestions des commentaires :
 
 - Dans la vue show de 'posts' mettre ce code :
+
 ---	
-	<p id="notice"><%= notice %></p>
+<p id="notice"><%= notice %></p>
 
+<p>
+  <h1><%= @post.title %></h1>
+  <i>Writen by <%= @post.user.username %></i>
+</p>
+
+<p>
+  <h3><%= @post.content %></h3>
+</p>
+
+<div class="panel">
 	<p>
-	  <h1><%= @post.title %></h1>
-	  <i>Writen by <%= @post.user.username %></i>
+		<h4><%= @post.comments.count %> comment(s) :</h4>
 	</p>
 
 	<p>
-	  <h3><%= @post.content %></h3>
+		<% @post.comments.each do |comment| %>
+			<p><b><%= comment.user.username %></b></p>
+			<p><i><%= comment.content %></i></p>
+		<% end %>
 	</p>
+</div>
 
-	<div class="panel">
-		<p>
-			<h4><%= @post.comments.count %> comment(s) :</h4>
-		</p>
+<p>
+	<h4>New Comment :</h4>
+</p>
 
-		<p>
-			<% @post.comments.each do |comment| %>
-				<p><b><%= comment.user.username %></b></p>
-				<p><i><%= comment.content %></i></p>
-			<% end %>
-		</p>
-	</div>
-
+<%= form_for [ @post, Comment.new ] do |comment| %>
 	<p>
-		<h4>New Comment :</h4>
-	</p>
+    	<%= comment.label :content, "New comment" %><br/>
+    	<%= comment.text_area :content %>
+  	</p>
 
-	<%= form_for [ @post, Comment.new ] do |comment| %>
-		<p>
-	    	<%= comment.label :content, "New comment" %><br/>
-	    	<%= comment.text_area :content %>
-	  	</p>
+  	<%= button_tag "Comment", :type => 'submit' %>
+<% end %>
 
-	  	<%= button_tag "Comment", :type => 'submit' %>
-	<% end %>
+<%= link_to 'Edit', edit_post_path(@post) %> |
+<%= link_to 'Back', posts_path %>
 
-	<%= link_to 'Edit', edit_post_path(@post) %> |
-	<%= link_to 'Back', posts_path %>
 ---
 
 - modifier la route 'posts' pour obtenir une route 'post/:id/comments' lorsque l'on appelle son action create uniquement :
+
 ---	  
-	resources :posts do
-		resources :comments, :only => [:create]
-	end
+
+resources :posts do
+	resources :comments, :only => [:create]
+end
+
 ---
+
 - modifier l'action 'create' du controller 'post' :
----
-	def create
-		@post = Post.new(params.require(:post).permit(:title, :content))
-		@user = User.find(:first)
-		@post.user = @user
 
-		[...]
-	end
 ---
+
+def create
+	@post = Post.new(params.require(:post).permit(:title, :content))
+	@user = User.find(:first)
+	@post.user = @user
+
+	[...]
+end
+
+---
+
 - modifier l'action 'create' du controller 'comment' :
----	  
-	def create
-		@post = Post.find(params[:post_id])
-		@user = User.first()
-		@comment = @post.comments.create(:user_id => @user.id, :content => params[:comment][:content])
 
-		redirect_to :back
-	end
+---
+
+def create
+	@post = Post.find(params[:post_id])
+	@user = User.first()
+	@comment = @post.comments.create(:user_id => @user.id, :content => params[:comment][:content])
+
+	redirect_to :back
+end
+
 ---
 
 == View Post Index :
 
 - Se rendre dans la view index de Post et mettre remplacer le code précédemment écrit par :
+
 ---
-	<div class="large-12 columns blog">
 
-	  <%= link_to 'New Post', new_post_path, { :class => 'button'} %>
+<div class="large-12 columns blog">
 
-	  <ul class="large-block-grid-4 ">
+  <%= link_to 'New Post', new_post_path, { :class => 'button'} %>
 
-	    <% @posts.each do |post| %>
-	      <li>
-	        <article>
-	            <p>
-	              <h3><%= post.title %></h3>
-	              <p>Written by <i><%= post.user.username %></i>, the <%= post.created_at.strftime('%d/%m/%Y') %></p>
-	            </p>
-	            
-	            <p class="panel">
-	              <i><%= post.content %></i>
-	            </p>
-	            
-	            <p>
-	              <%= post.comments.count %> Comment(s)
-	            </p>
+  <ul class="large-block-grid-4 ">
 
-	            <p>
-	              <%= link_to 'Show', post %> |
-	              <%= link_to 'Edit', edit_post_path(post) %> |
-	              <%= link_to 'Destroy', post, method: :delete, data: { confirm: 'Are you sure?' } %>
-	            </p>
+    <% @posts.each do |post| %>
+      <li>
+        <article>
+            <p>
+              <h3><%= post.title %></h3>
+              <p>Written by <i><%= post.user.username %></i>, the <%= post.created_at.strftime('%d/%m/%Y') %></p>
+            </p>
+            
+            <p class="panel">
+              <i><%= post.content %></i>
+            </p>
+            
+            <p>
+              <%= post.comments.count %> Comment(s)
+            </p>
 
-	        </article>
-	      </li>
-	    <% end %>
-	  
-	  </ul>
+            <p>
+              <%= link_to 'Show', post %> |
+              <%= link_to 'Edit', edit_post_path(post) %> |
+              <%= link_to 'Destroy', post, method: :delete, data: { confirm: 'Are you sure?' } %>
+            </p>
 
-	</div>
+        </article>
+      </li>
+    <% end %>
+  
+  </ul>
+
+</div>
+
 ---
+
 - Profitons de Foundation, en se rendant dans 'app/stylesheets/posts.css.scss' pour mettre cette ligne de css :
+
 ---
-	.blog {
-		margin-top: 30px;
-	}
+
+.blog {
+	margin-top: 30px;
+}
+
 ---
 
 == Debug :
