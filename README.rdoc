@@ -1,5 +1,6 @@
 = Projet de blog basic sous rails avec Foundation
 
+si problème avec le formatage se rendre : https://github.com/aZerato/Rails-Blog-Foundation/blob/master/doc-ruby.txt
 
 == Creation du projet
 
