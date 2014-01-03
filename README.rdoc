@@ -2,6 +2,12 @@
 
 Documentation : https://github.com/aZerato/Rails-Blog-Foundation/blob/master/doc-ruby.txt
 
+== Limites du projet
+
+- Gestion ultra simple des utilisateurs
+- Les commentaires sont liés au post à partir duquel ils sont créé, et sont lié à un utilisateur [je fais un User.find(:first) pour la liaison, aucune gestion en session]
+(C'est une base !)
+
 == Objectifs
 
 Découvrir Ruby & Rails
@@ -25,8 +31,3 @@ Découvrir Ruby & Rails
 Taper les commandes suivantes :
 - rake db:migrate
 - rails s
-
-== Limites du projet
-
-- Gestion ultra simple des utilisateurs
-- Les commentaires sont liés au post à partir duquel ils sont créé, et sont lié à un utilisateur [je fais un User.find(:first) pour la liaison, aucune gestion en session]
