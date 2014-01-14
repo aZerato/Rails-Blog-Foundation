@@ -1,4 +1,4 @@
-= Projet de blog (basique) sous rails avec Foundation
+= Projet de blog (basique) sous Rails avec Foundation
 
 Documentation : https://github.com/aZerato/Rails-Blog-Foundation/blob/master/doc-ruby.txt
 
