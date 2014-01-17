@@ -1,7 +1,7 @@
 = Projet de blog (basique) sous Rails avec Foundation
 
-Documentation : https://github.com/aZerato/Rails-Blog-Foundation/blob/master/doc-ruby.txt
-Présentation sous Reveal de Ruby -> Rails (Started)
+- Documentation : https://github.com/aZerato/Rails-Blog-Foundation/blob/master/doc-ruby.txt
+- Présentation sous Reveal de Ruby -> Rails (Started)
 
 == Limites du projet
 
