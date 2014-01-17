@@ -30,7 +30,7 @@ class PostsController < ApplicationController
   # POST /posts.json
   def create
     @post = Post.new(params.require(:post).permit(:title, :content))
-    @user = User.find(:first)
+    @user = User.find(:last)
     @post.user = @user
     
     respond_to do |format|
